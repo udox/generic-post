@@ -1,0 +1,21 @@
+.purple {
+    background: -webkit-gradient(linear, left top, left bottom, from(#c400c6), to(#721c73));
+    background: -moz-linear-gradient(#c400c6,#721c73);
+}
+.green {
+    background: -webkit-gradient(linear, left top, left bottom, from(#35b509), to(#227305));
+    background: -moz-linear-gradient(#35b509,#227305);
+}
+.yellow {
+    background: -webkit-gradient(linear, left top, left bottom, from(#e0dd00), to(#e0b300));
+    background: -moz-linear-gradient(#e0dd00,#e0b300);
+}
+.orange {
+    background: -webkit-gradient(linear, left top, left bottom, from(#de791e), to(#b51803));
+    background: -moz-linear-gradient(#de791e,#b51803);
+}
+.red {
+    background: -webkit-gradient(linear, left top, left bottom, from(#de1a2d), to(#cc0329));
+    background: -moz-linear-gradient(#de1a2d,#cc0329);
+}
+
