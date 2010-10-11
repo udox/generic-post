@@ -30,6 +30,10 @@ DATETIME_FORMAT = 'F d Y P T'
 
 SITE_ID = 1
 
+
+NEWS = {
+    'AUTO_TEASER_LENGTH': 80, # (words) to trim at for auto-made post teasers
+}
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = False

@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+	<head>
+	</head>
+	<body>	
+		<h1>{{ object.title }}</h1>
+		<p>{{ object.render_body|safe }}</p>
+		<p>{{ object.teaser }}</p>
+	</body>
+</html>
+
+<div class="post">
+    <h3>{{ object.name }}</h3>
+    <h4>Posted {{ object.created_at }}</h4>
+
+    {% comment %}<div class="post-teaser">{{ object.teaser|safe }}</div>{% endcomment %}
+    <div class="post-body">{{ object.render_body|safe }}</div>
+    <p class="post-socialmedia">
+
+            <div class="fb-root"></div>
+<script type="text/javascript">
+
+    //<![CDATA[
+    document.writeln('<div class="FB"><fb:like href="http://www.vans.com{{ object.get_absolute_url }}" layout="button_count" width="70"></fb:like></div>');
+    //]]>
+</script>
+            <div class="shareLinks">
+                <a href="http://twitter.com/share?url=http://www.vans.com{{ object.get_absolute_url }}" class="twitter-share-button" data-count="horizontal">Tweet</a>
+            </div>
+        </p>   
+</div>
