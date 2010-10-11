@@ -3,29 +3,28 @@
 	<head>
 	</head>
 	<body>	
-		<h1>{{ object.title }}</h1>
-		<p>{{ object.render_body|safe }}</p>
-		<p>{{ object.teaser }}</p>
+	<div class="post">
+	    <h3>{{ object.title }}</h3>
+		<h4>Posted {{ object.created_at }}</h4>
+
+	    {% comment %}<div class="post-teaser">{{ object.actual_teaser|safe }}</div>{% endcomment %}
+	    <div class="post-body">{{ object.render_body|safe }}</div>
+	    <p class="post-socialmedia">
+	
+	    <div class="fb-root"></div>
+		<script type="text/javascript">		
+		    //<![CDATA[
+		    document.writeln('<div class="FB"><fb:like href="http://www.vans.com{{ object.get_absolute_url }}" layout="button_count" width="70"></fb:like></div>');
+		    //]]>
+		</script>
+	            <div class="shareLinks">
+	                <a href="http://twitter.com/share?url={{ object.get_full_url }}" class="twitter-share-button" data-count="horizontal">Tweet</a>
+	                <a href="http://twitter.com/share?url=http://10.10.91.123:8000{{ object.get_absolute_url }}" class="twitter-share-button" data-count="horizontal">Tweet</a>				
+
+				</div>
+	        </p>   
+    </div>
+
 	</body>
 </html>
 
-<div class="post">
-    <h3>{{ object.name }}</h3>
-    <h4>Posted {{ object.created_at }}</h4>
-
-    {% comment %}<div class="post-teaser">{{ object.teaser|safe }}</div>{% endcomment %}
-    <div class="post-body">{{ object.render_body|safe }}</div>
-    <p class="post-socialmedia">
-
-            <div class="fb-root"></div>
-<script type="text/javascript">
-
-    //<![CDATA[
-    document.writeln('<div class="FB"><fb:like href="http://www.vans.com{{ object.get_absolute_url }}" layout="button_count" width="70"></fb:like></div>');
-    //]]>
-</script>
-            <div class="shareLinks">
-                <a href="http://twitter.com/share?url=http://www.vans.com{{ object.get_absolute_url }}" class="twitter-share-button" data-count="horizontal">Tweet</a>
-            </div>
-        </p>   
-</div>

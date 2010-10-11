@@ -1,82 +1,83 @@
+"""
+TODO:
+    
+"""
+
 import os
 from django.db import models
+from django.db.models import Q, Manager
 from django.conf import settings
+from datetime import datetime, date
 from django.utils.safestring import mark_safe
 from bbcode.templatetags.bbcode import bb2xhtml
+from bbcode.render import RenderBBcode
 from sorl.thumbnail.fields import ImageWithThumbnailsField
 from PIL import Image
+from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 
-import re
+import re  
 
-match_post_images = re.compile(r'(\[\[image-[0-9]+\]\])')
-match_readmore = re.compile(r'(\[readmore\])')
 
-class RenderBBcode(object):
-    def render_body(self, remove_more=True):
-        """
-        Parses the body content to convert bbcode & my tags into html. All old posts
-        are written in HTML format so we give the option of formatting posts either
-        way and returning the appropriate data for output.
-        """
-        if self.body == '' or self.body is None:            
-            if self.format == 'bbcode':
-                return bb2xhtml(self.teaser)
-            else:
-                return self.teaser
-        if self.format == 'html':          
-            return self.body
-        else:           
-            images = self.images_mapped()             
-            body = bb2xhtml(self.body)            
-            if remove_more:
-                body = body.replace('[readmore]', '')            
-            for index in images:                
-                if images[index].link:
-                    repl = '<a href="%s"><img class="news-inline-image" src="%s" alt="%s image" /></a>' \
-                        % (images[index].link, images[index].image.url, self.title)
-                else:
-                    repl = '<img src="%s" class="news-inline-image" alt="%s image" />' \
-                        % (images[index].image.url, self.title)
-                body = re.sub(r'(\[\[image-%s\]\])' \
-                    % (int(index)+1).__str__(), repl, body)
-            
-            return mark_safe(body)        
-        
-    @property
-    def clean_body(self):
-        return self.render_body(remove_more=False)
+class LiveManager(Manager):
+    """ A maanger for switchable objects ordered by descending created date """
+    def get_query_set(self):
+        return super(LiveManager, self).get_query_set().filter(status=5).order_by('-created_at')
+
+# via http://stackoverflow.com/questions/454436/unique-fields-that-allow-nulls-in-django
+# allows us to have a slug field that can be null but also unique
+# discussion on the original problem here: http://code.djangoproject.com/ticket/9039
+
+class SlugNullField(models.SlugField):
+    description = "SlugField that stores NULL but returns ''"
+    def to_python(self, value):  #this is the value right out of the db, or an instance
+       if isinstance(value, models.SlugField): #if an instance, just return the instance
+              return value
+       if value==None:   #if the db has a NULL (==None in Python)
+              return ""  #convert it into the Django-friendly '' string
+       else:
+              return value #otherwise, return just the value
+    def get_db_prep_value(self, value):  #catches value right before sending to db
+       if value=="":     #if Django tries to save '' string, send the db None (NULL)
+            return None
+       else:
+            return value #otherwise, just pass the value
     
-    @property
-    def split_body(self):
-        return match_readmore.split(self.clean_body)
+class NewsPost(models.Model, RenderBBcode):
+    
+    FORMAT_CHOICES = (
+        ('html', 'Raw HTML'),
+        ('bbcode', 'BBCode (recommended)'),
+    )
+    
+    STATUS_CHOICES = (
+        (0, 'Offline'),
+        (3, 'Preview'),
+        (5, 'Live'),
+    )
 
-    @property
-    def wordcount(self):
-        """Total words in the post body, *not* the teaser"""
-        return len(striptags(self.clean_body).split(' '))
-
-    @property
-    def remaining_words(self):
-        """ Counts the total words remaining - bit rough, may not match
-        exactly but should be pretty close """
-        words = self.wordcount
-        match_split = self.split_body
-
-        if self.teaser and self.body is None or self.body == '':
-            return 0 # if teaser is defined the whole thing remains
-        
-        if self.teaser and self.body:
-            return words
-
-        if len(match_split) == 3:
-            count = words - len(striptags(match_split[0]).split(' '))
-        else:
-            count = words - settings.NEWS['AUTO_TEASER_LENGTH']
-
-        if count <= 0:
-            return 0
-
-        return count
+    status = models.IntegerField(choices=STATUS_CHOICES, default=5)
+    status.help_text = 'Use this to take items off the site without deleting them'
+    title = models.CharField(max_length=255)
+    body = models.TextField(blank=True, null=True)   
+    teaser = models.TextField(blank=True, null=True)
+    slug = SlugNullField(null=True, blank=True, unique=True, max_length=255)
+    user = models.ForeignKey(User, blank=True, null=True)
+    created_at = models.DateTimeField(default=datetime.now, blank=True, null=True)
+    
+    start_date = models.DateField(blank=True, null=True)
+    start_date.help_text = 'When the event starts'
+    start_time = models.TimeField(blank=True, null=True)
+    start_time.help_text = 'All day events can leave this blank'
+    end_date = models.DateField(blank=True, null=True)
+    end_date.help_text = '1-Day events can leave this'
+    end_time = models.TimeField(blank=True, null=True)
+    
+    format = models.CharField(max_length=6, choices=FORMAT_CHOICES, default='bbcode')
+    source_object_pk = models.IntegerField(editable=False, blank=True, null=True )       
+    
+    def __unicode__(self):
+        return self.title
     
     def images(self):
         return NewsPostImage.objects.all().filter(news_post=self)
@@ -90,47 +91,18 @@ class RenderBBcode(object):
         except:
             return None        
     
+    @models.permalink
+    def get_absolute_url(self):
+        return ('news:objects', [self.pk, self.slug])
+    
     @property
-    def actual_teaser(self):
-        """ Returns the summary content based on the post. If there is a
-        teaser defined that is used otherwise it checks if the post has
-        a [[more]] tag and returns the first part of the match. Finally
-        it will trim it to a certain word length. """
-        if self.teaser:
-            if self.format == 'bbcode':
-                 print "render bbcode"
-                 return bb2xhtml(self.teaser)
-            else:
-                 return self.teaser            
-        else:
-            clean_body = self.clean_body
-            match_split = self.split_body
-            if len(match_split) == 3: # we have 1 [[more]] tag
-                return match_split[0]
-            else:
-                return ' '.join(clean_body.split(' ')[:settings.NEWS['AUTO_TEASER_LENGTH']])
-
+    def get_full_url(self):
+        domain = Site.objects.get_current().domain
+        path = self.get_absolute_url()
+        return 'http://%s%s' % (domain, path)
     
-   
-    
-class NewsPost(models.Model, RenderBBcode):
-    
-    FORMAT_CHOICES = (
-        ('html', 'Raw HTML'),
-        ('bbcode', 'BBCode (recommended)'),
-    )
-  
-    title = models.CharField(max_length=255)
-    body = models.TextField(blank=True, null=True)   
-    teaser = models.TextField(blank=True, null=True)
-    format = models.CharField(max_length=6, choices=FORMAT_CHOICES, default='bbcode')
-    
-    def __unicode__(self):
-        return self.title
-    
-#    @models.permalink
-#    def get_absolute_url(self):
-#        return ('news:item', [self.pk, self.slug])
+    objects = models.Manager()
+    live = LiveManager()
     
 class NewsPostImage(models.Model):
     """

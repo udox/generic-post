@@ -30,7 +30,6 @@ DATETIME_FORMAT = 'F d Y P T'
 
 SITE_ID = 1
 
-
 NEWS = {
     'AUTO_TEASER_LENGTH': 80, # (words) to trim at for auto-made post teasers
 }

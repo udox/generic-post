@@ -47,10 +47,20 @@ class NewsPostImageAdmin(admin.TabularInline):
     allow_add = True
 
 class NewsAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at')
+    search_fields = ('title', )
+    ordering = ('-created_at',)
     content_fields = (
-        (None, {'fields': ('title')}),
+        (None, {'fields': ('title', 'status', 'slug', 'created_at')}),
         ('Content', { 'fields' : ('format', 'body', 'teaser')}),
+        ('Date & Time', { 'fields' : (('start_date', 'start_time'), ('end_date', 'end_time'))}),
     )
+    fieldsets = (
+        (None, {'fields': ('title', 'status', 'slug', 'created_at')}),
+        ('Content', { 'fields' : ('format', 'body', 'teaser')}),
+        ('Date & Time', { 'fields' : (('start_date', 'start_time'), ('end_date', 'end_time'))}),        
+    )
+    prepopulated_fields = { 'slug' : ('title',) }
    
     def formfield_for_dbfield(self, db_field, **kwargs):
            field = super(NewsAdmin, self).formfield_for_dbfield(db_field, **kwargs)
@@ -61,4 +71,11 @@ class NewsAdmin(admin.ModelAdmin):
            return field
        
     inlines = [NewsPostImageAdmin,]
+    
+    def save_model(self, request, obj, form, change):
+        if not obj.user:
+            obj.user = request.user
+        super(NewsAdmin, self).save_model(request, obj, form, change)
+    
+    
 admin.site.register(NewsPost, NewsAdmin)
