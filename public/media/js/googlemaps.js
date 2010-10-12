@@ -29,6 +29,7 @@ function mapInit(element, address, point, zoomlevel) {
                         //alert(address + " not found");
                     } else {
                         map.setCenter(point, zoomlevel);
+						map.setUIToDefault();
                         addressPopup(address, map, point);
                     }
                 });
