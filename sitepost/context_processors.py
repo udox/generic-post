@@ -6,9 +6,10 @@ def common(request):
     that better to just include the key here (or maybe move into template itself.
     """
     GMAPS_KEY = settings.GOOGLE_MAPS['API_KEY']
-    
+   # print 'googlemap key = %s' % GMAPS_KEY
     if not GMAPS_KEY or GMAPS_KEY == '':
         GMAPS_KEY = None
+        print 'googlemap key = %s' % GMAPS_KEY
         
     return {
         'GMAPS_KEY' : GMAPS_KEY,       

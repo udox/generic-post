@@ -6,6 +6,8 @@
         {% if GMAPS_KEY %}
 			{% include 'sitepost/googlemaps_script.html' %}	
 	    {% endif %}	
+		<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+		
 	</head>
 	<body>
 		<div class="post">
@@ -15,10 +17,9 @@
 	
 		    {% comment %}<div class="post-teaser">{{ object.actual_teaser|safe }}</div>{% endcomment %}
 		    <div class="post-body">{{ object.render_body|safe }}</div>		
-		    <p class="post-socialmedia">
-		
-		    <div class="fb-root"></div>
-			<script type="text/javascript">		
+		    <p class="post-socialmedia">		
+            {% include 'sitepost/includes/facebook_script.js' %} 
+			<script type="text/javascript">
 			    //<![CDATA[
 			    document.writeln('<div class="FB"><fb:like href="{{ object.get_full_url }}" layout="button_count" width="70"></fb:like></div>');
 			    //]]>
@@ -28,7 +29,5 @@
 		            </div>
 		        </p>   
 	    </div>
-
 	</body>
 </html>
-

@@ -34,6 +34,7 @@ NEWS = {
     'AUTO_TEASER_LENGTH': 80, # (words) to trim at for auto-made post teasers
 }
 
+# Enter your own site api key at http://code.google.com/apis/maps/signup.html 
 GOOGLE_MAPS = {
     'API_KEY': 'ABQIAAAACKCXPXrfsTOm5k5Ir75LqBTCgN6ZOzSQHmXeQQPhPHq-2M9DiBQlvrSwb6PMbLrR_N1ydAL86_CkVA', #local dev
     'ZOOM_LEVEL' : 13,
