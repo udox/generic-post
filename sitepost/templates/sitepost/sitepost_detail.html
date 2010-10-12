@@ -2,9 +2,10 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
 	<head>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-		<link href="{{ MEDIA_URL }}css/google-map-size.css" type="text/css" rel="stylesheet"> 
-        {% include 'sitepost/googlemaps_script.html' %}		
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>		
+        {% if GMAPS_KEY %}
+			{% include 'sitepost/googlemaps_script.html' %}	
+	    {% endif %}	
 	</head>
 	<body>
 		<div class="post">

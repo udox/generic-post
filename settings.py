@@ -71,6 +71,7 @@ TEMPLATE_CONTEXT_PROCESSORS  = (
     'django.core.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.media',
+    'sitepost.context_processors.common',
 )
 
 MIDDLEWARE_CLASSES = (
