@@ -2,7 +2,7 @@ import os
 from django.db import models
 from django.conf import settings
 from django.utils.safestring import mark_safe
-from news.models import *
+from sitepost.models import *
 from bbcode.templatetags.bbcode import bb2xhtml
 from sorl.thumbnail.fields import ImageWithThumbnailsField
 from PIL import Image

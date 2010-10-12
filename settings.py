@@ -33,6 +33,8 @@ SITE_ID = 1
 NEWS = {
     'AUTO_TEASER_LENGTH': 80, # (words) to trim at for auto-made post teasers
 }
+
+
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = False
@@ -80,7 +82,7 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_PATH, 'bbcode/templates'),
-    os.path.join(PROJECT_PATH, 'news/templates'),
+    os.path.join(PROJECT_PATH, 'sitepost/templates'),
     os.path.join(PROJECT_PATH, 'templates'),
 )
 
@@ -93,5 +95,5 @@ INSTALLED_APPS = (
     'django.contrib.comments',
     'sorl.thumbnail',
     'bbcode',
-    'news',
+    'site',
 )

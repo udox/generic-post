@@ -10,5 +10,5 @@ urlpatterns = patterns('',
         'document_root': settings.MEDIA_ROOT,
         'show_indexes' : True
     }),
-    (r'^', include('news.urls', namespace='news')),
+    (r'^', include('sitepost.urls', namespace='sitepost')),
 )
