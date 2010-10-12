@@ -34,6 +34,10 @@ NEWS = {
     'AUTO_TEASER_LENGTH': 80, # (words) to trim at for auto-made post teasers
 }
 
+GOOGLE_MAPS = {
+    'API_KEY': 'ABQIAAAACKCXPXrfsTOm5k5Ir75LqBTCgN6ZOzSQHmXeQQPhPHq-2M9DiBQlvrSwb6PMbLrR_N1ydAL86_CkVA', #local dev
+    'ZOOM_LEVEL' : 13,
+}
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -75,7 +79,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
 
-ROOT_URLCONF = 'djbb_dev.urls'
+ROOT_URLCONF = 'generic-post.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -95,5 +99,5 @@ INSTALLED_APPS = (
     'django.contrib.comments',
     'sorl.thumbnail',
     'bbcode',
-    'site',
+    'sitepost',
 )

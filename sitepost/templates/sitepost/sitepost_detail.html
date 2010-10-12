@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+		<link href="{{ MEDIA_URL }}css/google-map-size.css" type="text/css" rel="stylesheet"> 
+        {% include 'sitepost/googlemaps_script.html' %}		
+	</head>
+	<body>
+		<div class="post">
+		    <h3>{{ object.title }}</h3>
+			<h4>Posted {{ object.created_at }} by <span class="username">
+				{% block posted_by %}{{ object.user.first_name }}{% endblock %}</span></h4>
+	
+		    {% comment %}<div class="post-teaser">{{ object.actual_teaser|safe }}</div>{% endcomment %}
+		    <div class="post-body">{{ object.render_body|safe }}</div>		
+		    <p class="post-socialmedia">
+		
+		    <div class="fb-root"></div>
+			<script type="text/javascript">		
+			    //<![CDATA[
+			    document.writeln('<div class="FB"><fb:like href="{{ object.get_full_url }}" layout="button_count" width="70"></fb:like></div>');
+			    //]]>
+			</script>
+		            <div class="shareLinks">
+		                <a href="http://twitter.com/share?url={{ object.get_full_url }}" class="twitter-share-button" data-count="horizontal">Tweet</a>
+		            </div>
+		        </p>   
+	    </div>
+
+	</body>
+</html>
+
