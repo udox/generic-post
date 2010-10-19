@@ -1,16 +1,17 @@
 {% extends 'master.html' %}
-{% load sitepost_media_tags facebook_tags %}
+{% load sitepost_media_tags facebook_tags twitter_tags %}
 
 {% block head %}
     {% render_gmaps_media %}
-    {% render_facebook_likemeta object %}      
+    {% facebook_like_meta object %}      
 {% endblock %}
 
-{% block javascript %}			
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>       
+{% block javascript %}   
+	{% twitter_js %}          
 {% endblock %}
 
-{% block css %}		
+{% block css %}	
+	
 {% endblock %}        
 
 {% block body %}
@@ -19,14 +20,13 @@
 		  <div class="post">
                 <h3>{{ object.title }}</h3>
                 <h4>Posted {{ object.created_at }} by <span class="username">
-                    {% block posted_by %}{{ object.user.first_name }}{% endblock %}</span></h4>
-        
+                    {% block posted_by %}{{ object.user.first_name }}{% endblock %}</span></h4>        
                 {% comment %}<div class="post-teaser">{{ object.actual_teaser|safe }}</div>{% endcomment %}
                 <div class="post-body">{{ object.render_body|safe }}</div>      
                 <div class="post-socialmedia">
                 {% block social %}			                
-		            {% render_facebook_like object %}
-					{% render_twitter %}             
+		            {% facebook_like_iframe object %}
+					{% twitter object %}             
 				{% endblock social %}
                 </div>   
            </div>

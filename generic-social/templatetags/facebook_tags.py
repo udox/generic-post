@@ -13,7 +13,7 @@ register = template.Library()
 
 
 @register.inclusion_tag('tags/facebook_like_iframe.html')
-def render_facebook_like(obj):  
+def facebook_like_iframe(obj):  
     url = obj.get_full_url  
     
     return { 
@@ -22,10 +22,9 @@ def render_facebook_like(obj):
        
     
 @register.inclusion_tag('tags/facebook_like_meta.html')
-def render_facebook_likemeta(obj):        
+def facebook_like_meta(obj):        
     title = obj.title[:150]
-    image = 'default vans logo image? maybe see if we can add img scr as the \
-        more link gallery option?'
+    image = 'default vans logo image? maybe see if we can add img scr as the more link gallery option?'
     url = obj.get_full_url   
     site_name = Site.objects.get_current().name
     type = 'article'  
@@ -41,11 +40,7 @@ def render_facebook_likemeta(obj):
             'fbadmins': fbadmins,                            
             }, 
     }
-    
-    
-@register.inclusion_tag('tags/twitter.html')   
-def render_twitter():     
-    return ''
+
     
         
     
