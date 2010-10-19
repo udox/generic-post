@@ -40,6 +40,12 @@ GOOGLE_MAPS = {
     'ZOOM_LEVEL' : 13,
 }
 
+
+# Comma seperated string of fb admin user ids for moderation on like button
+FB_ADMINS = {
+    'uids': '100000670576512'
+}
+
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = False
@@ -72,7 +78,7 @@ TEMPLATE_CONTEXT_PROCESSORS  = (
     'django.core.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.media',
-    'sitepost.context_processors.common',
+    #'sitepost.context_processors.common',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -89,6 +95,7 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_PATH, 'bbcode/templates'),
     os.path.join(PROJECT_PATH, 'sitepost/templates'),
+    os.path.join(PROJECT_PATH, 'generic-social/templates'),
     os.path.join(PROJECT_PATH, 'templates'),
 )
 
@@ -102,4 +109,5 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'bbcode',
     'sitepost',
+    'generic-social',
 )

@@ -1,9 +1,3 @@
-"""
-TODO:
-    drop db and resync
-  Star refactoring news "Post"
-  incorporate Sites   
-"""
 import os
 from django.db import models
 from django.conf import settings
