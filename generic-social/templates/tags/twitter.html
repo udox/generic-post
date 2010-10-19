@@ -1,3 +1,9 @@
 <div class="twitter">
-        <a href="http://twitter.com/share?url={{ tweet_url }}" class="twitter-share-button" data-count="horizontal">Tweet</a>
+<script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
+<a href="http://twitter.com/share" class="twitter-share-button"
+      data-url="{{ tweet_url }}"
+      data-via="{{ tweet_via }}"
+      data-text="{{ tweet_title }}"
+      data-related="anywhere:The Javascript API"
+      data-count="horizontal">Tweet</a>
 </div>
