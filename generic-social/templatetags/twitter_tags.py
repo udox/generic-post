@@ -9,7 +9,7 @@ register = template.Library()
     
 @register.inclusion_tag('tags/twitter.html')   
 def twitter(obj): 
-    tweet_url = obj.get_full_url  
+    tweet_url = 'http://vans.com/post/post/123897'#obj.get_full_url  
     tweet_title = '%s... Read more at:' % obj.title[:80]  
        
     return {

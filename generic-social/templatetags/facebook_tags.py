@@ -8,9 +8,10 @@ from django.conf import settings
 from sitepost.models import *
 from django.utils.safestring import mark_safe
 from django.contrib.sites.models import Site
+from social.conf import *
 
 register = template.Library()
-
+print FACEBOOK_LIKE['IMAGE']
 
 @register.inclusion_tag('tags/facebook_like_iframe.html')
 def facebook_like_iframe(obj):  
@@ -28,7 +29,7 @@ def facebook_like_meta(obj):
     url = obj.get_full_url   
     site_name = Site.objects.get_current().name
     type = 'article'  
-    fbadmins = '100000670576512'    
+    fbadmins = FACEBOOK_LIKE['FBADMINS']    
         
     return {
         'fblike_meta': {   

@@ -95,7 +95,7 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_PATH, 'bbcode/templates'),
     os.path.join(PROJECT_PATH, 'sitepost/templates'),
-    os.path.join(PROJECT_PATH, 'generic-social/templates'),
+    os.path.join(PROJECT_PATH, 'social/templates'),
     os.path.join(PROJECT_PATH, 'templates'),
 )
 
@@ -109,5 +109,5 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'bbcode',
     'sitepost',
-    'generic-social',
+    'social',
 )
