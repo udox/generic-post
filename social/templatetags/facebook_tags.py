@@ -1,7 +1,8 @@
 """
 TODO: 
-   setup a conf for the fb vars
-   set img url in conf    
+    find a way to check conf (in views?) before we pull conf in template as 
+    raising exceptions in templates show ambiguous messages
+
 """
 from django import template
 from django.conf import settings
@@ -9,9 +10,10 @@ from sitepost.models import *
 from django.utils.safestring import mark_safe
 from django.contrib.sites.models import Site
 from social.conf import *
+from social.exceptions import FacebookParameterException
 
 register = template.Library()
-print FACEBOOK_LIKE['IMAGE']
+
 
 @register.inclusion_tag('tags/facebook_like_iframe.html')
 def facebook_like_iframe(obj):  
@@ -23,12 +25,21 @@ def facebook_like_iframe(obj):
        
     
 @register.inclusion_tag('tags/facebook_like_meta.html')
-def facebook_like_meta(obj):        
+def facebook_like_meta(obj):    
+    
     title = obj.title[:150]
-    image = 'default vans logo image? maybe see if we can add img scr as the more link gallery option?'
+
+    if not FACEBOOK_LIKE['IMAGE']:
+        raise FacebookParameterException('facebook image FACEBOOK_LIKE[\'IMAGE\']')                
+   
+    image = FACEBOOK_LIKE['IMAGE']   
     url = obj.get_full_url   
     site_name = Site.objects.get_current().name
     type = 'article'  
+   
+    if not FACEBOOK_LIKE['FBADMINS']:
+        raise FacebookParameterException('fb admin uids FACEBOOK_LIKE[\'FBADMINS\']')
+        
     fbadmins = FACEBOOK_LIKE['FBADMINS']    
         
     return {

@@ -16,8 +16,9 @@ from django.conf import settings
 """
 Social config
 """
-FACEBOOK_LIKE = {   
-    'IMAGE': 'http://a0.twimg.com/a/1287437169/images/twitter_logo_header.png',
+FACEBOOK_LIKE = {  
+    # Facebook will resize image to 90x90px 
+    'IMAGE': '',# http://a0.twimg.com/a/1287437169/images/twitter_logo_header.png
     'FBADMINS': '100000670576512',    
 }
 
