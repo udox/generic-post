@@ -1,8 +1,9 @@
 from django import template
 from django.conf import settings
-from sitepost.models import *
 from django.utils.http import urlquote
 from django.contrib.sites.models import Site
+
+from sitepost.models import *
 
 register = template.Library()   
  

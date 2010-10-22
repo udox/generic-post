@@ -1,13 +1,11 @@
-"""
-TODO: 
-"""
 from django import template
 from django.conf import settings
-from sitepost.models import *
 from django.utils.safestring import mark_safe
 from django.contrib.sites.models import Site
 from social.conf import *
 from social.exceptions import FacebookParameterException
+
+from sitepost.models import *
 
 register = template.Library()
 
@@ -52,7 +50,7 @@ def facebook_like_meta(obj):
             }, 
     }
     
-
+# Error messages for missing social.conf parameters will only display in debug = true mode
 @register.inclusion_tag('tags/facebook_exceptions.html')
 def facebook_except(): 
     if settings.DEBUG and facebook_exceptions:
