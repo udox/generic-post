@@ -1,8 +1,4 @@
-might have to change post and social names i dont think that you can have - in the import names!
 setup the conf file to pull in all social data
-use exception example from ooyala app
-
-
 
 split the generic-social out of the generic-post though the sitepost.model need importing
 for it to work (get_full_path method)
