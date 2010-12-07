@@ -4,15 +4,13 @@
 {% block head %}
     {{ block.super }}
     {% render_gmaps_media %}
-    
 {% endblock %}
 
 {% block javascript %}
-{{ block.super }}
-<script type="text/javascript" src="{{ MEDIA_URL}}js/list_sites.js"></script>
+    {{ block.super }}
+    <script type="text/javascript" src="{{ MEDIA_URL}}js/list_sites.js"></script>
 {% endblock %}
 
 {% block post %}
     {% list_posts "1,2,3" %}
 {% endblock %}
-

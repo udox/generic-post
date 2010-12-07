@@ -1,34 +1,35 @@
 {% load sitepost_media_tags facebook_tags twitter_tags %}
-    <ul class="site_post_list">   
-        <li id="list_selector">
-            {% for site in sites  %}
-                <a href="#" id="show_site_{{ forloop.counter }}">Site id: {{ site.id }}</a><br />
-            {% endfor %}
-        </li>
-        <li class="site_list">
-            {% for site in sites %}        
-                <ul id="site_list_{{ forloop.counter}}">
-                    Site: {{ site.name }}
-                    {% for post in site.sitepost_set.all %}
-                        <li>                    
-                            <div class="post">
-                                <h3>{{ post.title }}</h3>
-                                <h4>Posted {{ post.created_at }} by <span class="username">
-                                    {% block posted_by %}{{ post.user.first_name }}{% endblock %}</span></h4>        
-                                {% comment %}<div class="post-teaser">{{ post.actual_teaser|safe }}</div>{% endcomment %}
-                                <div class="post-body">{{ post.render_body|safe }}</div>      
-                                <div class="post-socialmedia">         
-                                    {% facebook_like_iframe post %}
-                                    {% twitter post %}             
-                                </div>   
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endfor %}
-            </ul> 
-        </li>   
-    </ul>
+
+<ul class="site_post_list">   
+    <li id="list_selector">
+        {% for site in sites  %}
+            <a href="#" id="show_site_{{ forloop.counter }}">Site id: {{ site.id }}</a><br />
+        {% endfor %}
+    </li>
+    <li class="site_list">
+        {% for site in sites %}        
+            <ul id="site_list_{{ forloop.counter}}">
+                Site: {{ site.name }}
+                {% for post in site.sitepost_set.all %}
+                    <li>                    
+                        <div class="post">
+                            <h3>{{ post.title }}</h3>
+                            <h4>Posted {{ post.created_at }} by <span class="username">
+                                {% block posted_by %}{{ post.user.first_name }}{% endblock %}</span></h4>        
+                            {% comment %}<div class="post-teaser">{{ post.actual_teaser|safe }}</div>{% endcomment %}
+                            <div class="post-body">{{ post.render_body|safe }}</div>      
+                            <div class="post-socialmedia">         
+                                {% facebook_like_iframe post %}
+                                {% twitter post %}             
+                            </div>   
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+        </ul> 
+    </li>   
+</ul>
 
 
 
