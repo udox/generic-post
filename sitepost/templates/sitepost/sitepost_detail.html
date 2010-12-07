@@ -15,22 +15,20 @@
 {% endblock %}        
 
 {% block body %}
-    {% facebook_except %}
-	<body> 
-	  {% block post %}
-		  <div class="post">
-                <h3>{{ object.title }}</h3>
-                <h4>Posted {{ object.created_at }} by <span class="username">
-                    {% block posted_by %}{{ object.user.first_name }}{% endblock %}</span></h4>        
-                {% comment %}<div class="post-teaser">{{ object.actual_teaser|safe }}</div>{% endcomment %}
-                <div class="post-body">{{ object.render_body|safe }}</div>      
-                <div class="post-socialmedia">
-                {% block social %}			                
-		            {% facebook_like_iframe object %}
-					{% twitter object %}             
-				{% endblock social %}
-                </div>   
-           </div>
-	  {% endblock %}			
-	</body>           
+    <body>
+      {% facebook_except %}
+      {% block post %}
+	<div class="post">
+	    <h3>{{ object.title }}</h3>
+	    <h4>Posted {{ object.created_at }} by <span class="username">
+		{% block posted_by %}{{ object.user.first_name }}{% endblock %}</span></h4>        
+	    {% comment %}<div class="post-teaser">{{ object.actual_teaser|safe }}</div>{% endcomment %}
+	    <div class="post-body">{{ object.render_body|safe }}</div>      
+	    <div class="post-socialmedia">			                
+		{% facebook_like_iframe object %}
+		{% twitter object %}             
+	    </div>   
+	</div>
+      {% endblock %}			
+    </body>           
 {% endblock %}

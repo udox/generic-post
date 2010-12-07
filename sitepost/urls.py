@@ -7,7 +7,7 @@ urlpatterns = patterns('',
         'queryset' : SitePost.live.all(),
     }, 'objects'),
     
-    (r'^posts/$', 'django.views.generic.simple.direct_to_template', {
-        'template' : 'master.html', 
+    (r'^posts/', 'django.views.generic.simple.direct_to_template', {
+        'template' : 'sitepost/post_sites.html', 
     }, 'posts'),
 )
