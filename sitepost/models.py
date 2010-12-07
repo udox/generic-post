@@ -49,6 +49,17 @@ class SitePost(models.Model, RenderBBcode):
     def __unicode__(self):
         return self.title
     
+    #soley used for admin to create a many to many list_display field
+    def sites_attached(self):
+        name = None
+        s = self.sites.all()
+        for x in s:
+            if name:
+                name = """%s | %s""" % (name, x.name)
+            else:
+                name =  """%s """ % (x.name)
+        return name        
+    
     def images(self):
         return SitePostImage.objects.all().filter(site_post=self)
     

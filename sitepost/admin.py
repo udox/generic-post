@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.db import models
+from django.contrib.sites.models import Site
 from django import forms
 from django.contrib.admin.widgets import AdminFileWidget
 from django.utils.translation import ugettext as _
@@ -45,7 +46,10 @@ class SitePostImageAdmin(admin.TabularInline):
     allow_add = True
 
 class SiteAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_at')
+    
+    
+    
+    list_display = ('title', 'created_at', 'sites_attached')
     search_fields = ('title', )
     ordering = ('-created_at',)
     content_fields = (
@@ -56,9 +60,13 @@ class SiteAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('title', 'sites','status', 'slug', 'created_at')}),
         ('Content', { 'fields' : ('format', 'body', 'teaser')}),
-        ('Date & Time', { 'fields' : (('start_date', 'start_time'), ('end_date', 'end_time'))}),        
+        ('Date & Time', { 'fields' : (('start_date', 'start_time'), ('end_date', 'end_time'))}),
+       
     )
     prepopulated_fields = { 'slug' : ('title',) }
+    
+   
+    
    
     def formfield_for_dbfield(self, db_field, **kwargs):
            field = super(SiteAdmin, self).formfield_for_dbfield(db_field, **kwargs)
