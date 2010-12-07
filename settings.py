@@ -105,3 +105,10 @@ INSTALLED_APPS = (
     'sitepost',
     'social',
 )
+
+
+GENERAL = {
+    'POSTS': 5,
+    #SITE_DISPLAY must be set to none if not being used!
+    'SITES_DISPLAY': None,
+}

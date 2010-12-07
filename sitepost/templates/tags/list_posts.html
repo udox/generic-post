@@ -1,0 +1,23 @@
+{# expects sites object #}
+<ul class="site_post_list">   
+    <li id="list_selector">
+        {% for site in sites  %}
+            <a id="show_site_{{ forloop.counter }}">Site id: {{ site.id }} or counter: {{ forloop.counter }}</a><br />
+        {% endfor %}
+    </li>
+    <li class="site_list">
+        {% for site in sites %}
+        Site: {{ site.id}}, {{ site.name }}
+            <ul id="site_list_{{ forloop.counter}}">
+            
+                {% for post in site.sitepost_set.all %}
+                    <li>
+                    {{ post.title }}    
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+        </ul> 
+    </li>
+   
+</ul>

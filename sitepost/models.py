@@ -44,7 +44,7 @@ class SitePost(models.Model, RenderBBcode):
     
     format = models.CharField(max_length=6, choices=FORMAT_CHOICES, default='bbcode')
     sites = models.ManyToManyField(Site)
-    sites.help_text = 'Choose which site(s) post will appear on'       
+    sites.help_text = 'Choose which site(s) this post will appear on'       
     
     def __unicode__(self):
         return self.title

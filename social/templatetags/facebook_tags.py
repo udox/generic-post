@@ -26,10 +26,10 @@ def facebook_like_meta(obj):
     title = obj.title[:150]
 
     if not FACEBOOK_LIKE['IMAGE']:
-        facebook_exceptions['image'] = 'No image url found in conf' 
+        facebook_exceptions['image'] = 'No image url found in conf for like meta' 
         #raise FacebookParameterException('facebook image FACEBOOK_LIKE[\'IMAGE\']')                
     
-    image = FACEBOOK_LIKE['IMAGE']
+    image = FACEBOOK_LIKE['IMAGE'] 
     url = obj.get_full_url   
     site_name = Site.objects.get_current().name
     type = 'article'  
@@ -54,7 +54,7 @@ def facebook_like_meta(obj):
 @register.inclusion_tag('tags/facebook_exceptions.html')
 def facebook_except(): 
     if settings.DEBUG and facebook_exceptions:
-        facebook_exceptions['errors'] = 'Missing parameterts detected in conf these \
+        facebook_exceptions['errors'] = 'Missing parameterts detected in conf \
             these are required for facebook like button functionality to work'     
         
         return {
@@ -62,8 +62,7 @@ def facebook_except():
                 'error': facebook_exceptions['errors'],
                 'image': facebook_exceptions['image'],
                 'fbadmins': facebook_exceptions['fbadmins'], 
-            }
-            
+            }            
         }
 
     
