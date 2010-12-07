@@ -1,6 +1,5 @@
 from django import template
 from django.conf import settings
-from django.db.models import Q
 
 from django.contrib.sites.models import Site
 from sitepost.models import SitePost
@@ -27,13 +26,13 @@ def list_posts(site_list=None):
 
     if site_list:
         site_list = site_list.split(",")        
-        sites_sets = Site.objects.filter(id__in=site_list).order_by('id')
+        sites_sets = Site.objects.filter(id__in=site_list).order_by('id')[:post_limit]
     
     elif settings_site_list:
-        sites_sets = Site.objects.filter(id__in=site_list).order_by('id')     
+        sites_sets = Site.objects.filter(id__in=site_list).order_by('id')[:post_limit]     
    
     else:
-        sites_sets = Site.objects.all().order_by('id')      
+        sites_sets = Site.objects.all().order_by('id')[:post_limit]      
     return {
         'sites': sites_sets,
     }    

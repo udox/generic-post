@@ -10,7 +10,7 @@
         {% for site in sites %}        
             <ul id="site_list_{{ forloop.counter}}">
                 Site: {{ site.name }}
-                {% for post in site.sitepost_set.all %}
+                {% for post in site.sitepost_set.all|dictsortreversed:"created_at" %}
                     <li>                    
                         <div class="post">
                             <h3>{{ post.title }}</h3>
