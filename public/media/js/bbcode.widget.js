@@ -23,7 +23,7 @@ function insert_youtube(video_id, element) {
 function insert_vimeo(video_id, element) {
     if (!video_id) {
         video_id = prompt('What is the ID of the video (the numbers after the URL)?\n\n(Fear not, we\'ll clean it for you, you can copy the\nURL bit straight from vimeo)');
-        var re = new RegExp(/\/([0-9]+)/);
+        var re = new RegExp(/([0-9]+)/);
         var m = re.exec(video_id);
         if(m) {
             video_id = m[1];
